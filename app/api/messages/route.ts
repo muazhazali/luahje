@@ -1,4 +1,4 @@
-import { env } from "cloudflare:workers"
+import { getRequestContext } from "@cloudflare/next-on-pages"
 import type { UnsentMessage } from "@/lib/types"
 import { seedMessages } from "@/lib/seed-messages"
 
@@ -14,24 +14,17 @@ type D1ResultRow = {
   created_at: string
 }
 
+type Env = {
+  DB: D1Database
+}
+
 function getDatabase() {
-  const db = (env as { DB?: unknown }).DB
+  const { env } = getRequestContext<Env>()
+  const db = env.DB
   if (!db) {
     throw new Error("Missing D1 binding. Ensure DB is configured in wrangler.toml.")
   }
-  return db as {
-    prepare: (query: string) => {
-      bind: (...values: unknown[]) => {
-        all: () => Promise<{ results: D1ResultRow[] }>
-        first: () => Promise<{ count?: number } | null>
-        run: () => Promise<unknown>
-      }
-      all: () => Promise<{ results: D1ResultRow[] }>
-      first: () => Promise<{ count?: number } | null>
-      run: () => Promise<unknown>
-    }
-    batch: (statements: { run: () => Promise<unknown> }[]) => Promise<unknown>
-  }
+  return db
 }
 
 function mapRow(row: D1ResultRow): UnsentMessage {

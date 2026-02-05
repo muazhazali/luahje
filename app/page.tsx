@@ -171,7 +171,7 @@ export default function Page() {
 
       {/* Footer */}
       <footer className="border-t border-border/40 py-8 text-center text-xs text-muted-foreground">
-        <p>The Unsent Archive &mdash; Anonymous. Cathartic. Human.</p>
+        <p>Luah Je &mdash; Anonymous. Cathartic. Human.</p>
       </footer>
     </div>
   )

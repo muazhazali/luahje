@@ -30,7 +30,7 @@ export function SearchModal({ open, onOpenChange, query, onQueryChange }: Search
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Search the archive</DialogTitle>
+          <DialogTitle>Search Luah Je</DialogTitle>
           <DialogDescription>
             Search by name, initials, or words from a message
           </DialogDescription>

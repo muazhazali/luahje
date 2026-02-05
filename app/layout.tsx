@@ -8,7 +8,7 @@ const _inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const _playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
 
 export const metadata: Metadata = {
-  title: 'The Unsent Archive',
+  title: 'Luah Je',
   description: 'A digital archive of anonymous messages to the people we loved, lost, or never had the courage to speak to.',
 }
 

@@ -173,7 +173,7 @@ export function SubmitModal({ open, onOpenChange, onSubmit }: SubmitModalProps) 
             onClick={handleSubmit}
             className="h-11 w-full rounded-lg bg-foreground text-sm font-medium text-background transition-opacity hover:opacity-90 disabled:opacity-50"
           >
-            Send into the archive
+            Send to Luah Je
           </button>
         </div>
       </DialogContent>

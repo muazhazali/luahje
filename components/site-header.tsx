@@ -14,7 +14,7 @@ export function SiteHeader({ onOpenSubmit, onOpenSearch, searchQuery }: SiteHead
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-6">
         <div className="flex flex-col">
           <h1 className="text-lg font-semibold tracking-tight text-foreground md:text-xl">
-            The Unsent Archive
+            Luah Je
           </h1>
           <p className="hidden text-xs text-muted-foreground md:block">
             Messages never sent, feelings never shared

@@ -69,18 +69,18 @@ export function MessageDetail({ message, open, onOpenChange }: MessageDetailProp
     // Footer
     ctx.globalAlpha = 0.5
     ctx.font = "400 22px sans-serif"
-    ctx.fillText("theunsentarchive.com", 80, height - 80)
+    ctx.fillText("Luah Je", 80, height - 80)
     ctx.globalAlpha = 1
 
     const link = document.createElement("a")
-    link.download = `unsent-to-${message.to.toLowerCase().replace(/\s/g, "-")}.png`
+    link.download = `luah-je-to-${message.to.toLowerCase().replace(/\s/g, "-")}.png`
     link.href = canvas.toDataURL("image/png")
     link.click()
   }, [message])
 
   const handleShare = useCallback(async () => {
     if (!message) return
-    const text = `To: ${message.to}\n\n${message.message}\n\n- The Unsent Archive`
+    const text = `To: ${message.to}\n\n${message.message}\n\n- Luah Je`
     const url = typeof window !== "undefined" ? window.location.href : ""
 
     if (navigator.share) {

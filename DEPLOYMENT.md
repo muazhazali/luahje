@@ -5,7 +5,44 @@ This guide will help you deploy your Next.js application to Cloudflare Pages wit
 ## Prerequisites
 
 - A Cloudflare account
-- Cloudflare API Token or authenticated wrangler CLI
+- Cloudflare API Token (get it from https://dash.cloudflare.com/profile/api-tokens)
+- Cloudflare Account ID (found in your Cloudflare dashboard URL or Workers & Pages overview)
+
+## Quick Start: Automated Deployment with GitHub Actions
+
+The easiest way to deploy is using the included GitHub Actions workflow:
+
+### 1. Set Up GitHub Secrets
+
+Go to your GitHub repository Settings > Secrets and variables > Actions, and add:
+
+- `CLOUDFLARE_API_TOKEN`: Your Cloudflare API token
+- `CLOUDFLARE_ACCOUNT_ID`: Your Cloudflare Account ID
+
+### 2. Create D1 Database (One-time setup)
+
+Before the first deployment, you need to create the D1 database:
+
+```bash
+# Authenticate with Cloudflare
+export CLOUDFLARE_API_TOKEN="your-token-here"
+export CLOUDFLARE_ACCOUNT_ID="your-account-id-here"
+
+# Create database
+npx wrangler d1 create unsent_messages
+
+# Update wrangler.toml with the database_id from the output above
+```
+
+### 3. Deploy
+
+Push to main/master branch or manually trigger the workflow from GitHub Actions tab.
+
+---
+
+## Manual Deployment
+
+If you prefer to deploy manually:
 
 ## Authentication
 

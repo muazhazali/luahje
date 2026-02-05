@@ -1,4 +1,4 @@
-import { env } from "cloudflare:workers"
+import { getRequestContext } from "@cloudflare/next-on-pages"
 import type { UnsentMessage } from "@/lib/types"
 import { seedMessages } from "@/lib/seed-messages"
 
@@ -15,6 +15,7 @@ type D1ResultRow = {
 }
 
 function getDatabase() {
+  const { env } = getRequestContext()
   const db = (env as { DB?: unknown }).DB
   if (!db) {
     throw new Error("Missing D1 binding. Ensure DB is configured in wrangler.toml.")

@@ -1,5 +1,6 @@
 name = "luah-je"
 compatibility_date = "2026-02-06"
+pages_build_output_dir = ".vercel/output/static"
 
 [[d1_databases]]
 binding = "DB"

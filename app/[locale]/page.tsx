@@ -119,19 +119,19 @@ export default function Page() {
 
       {/* Hero section - shown when no search is active */}
       {!searchQuery && !activeColorFilter && (
-        <section className="border-b border-border/40 bg-secondary/30">
+        <section className="border-b border-border/50 bg-gradient-to-b from-secondary/40 via-background to-background">
           <div className="mx-auto flex max-w-7xl flex-col items-center px-4 py-16 text-center md:py-24">
-            <h2 className="text-balance text-3xl font-semibold tracking-tight text-foreground md:text-5xl">
+            <h2 className="font-display text-balance text-4xl font-semibold tracking-tight text-foreground md:text-6xl">
               {t('hero.title')}
               <br />
               <span className="text-muted-foreground">{t('hero.subtitle')}</span>
             </h2>
-            <p className="mt-4 max-w-lg text-pretty text-sm leading-relaxed text-muted-foreground md:text-base">
+            <p className="mt-5 max-w-2xl text-pretty text-sm leading-relaxed text-muted-foreground md:text-base">
               {t('hero.description')}
             </p>
             <button
               onClick={() => setSubmitOpen(true)}
-              className="mt-8 h-11 rounded-full bg-foreground px-6 text-sm font-medium text-background transition-opacity hover:opacity-90"
+              className="mt-8 h-11 rounded-full bg-foreground px-6 text-sm font-medium text-background shadow-sm hover:shadow-md"
             >
               {t('hero.cta')}
             </button>

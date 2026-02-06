@@ -88,6 +88,9 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-style: italic;
+    background-image:
+      radial-gradient(circle at top, hsl(30 20% 96%), transparent 55%),
+      radial-gradient(circle at 20% 20%, hsl(30 25% 94%), transparent 45%);
+    background-attachment: fixed;
   }
 }

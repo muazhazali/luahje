@@ -61,7 +61,7 @@ export function MessageGrid({
   const visibleMessages = messages.slice(0, visibleCount)
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-6 md:px-6">
+    <div className="mx-auto max-w-7xl px-4 py-8 md:px-6">
       {/* Toolbar */}
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
@@ -83,10 +83,10 @@ export function MessageGrid({
                 onClick={() =>
                   onColorFilterChange(activeColorFilter === c.value ? null : c.value)
                 }
-                className={`h-6 w-6 shrink-0 rounded-full border-2 transition-all ${
+                className={`h-6 w-6 shrink-0 rounded-full border-2 ${
                   activeColorFilter === c.value
-                    ? "scale-110 border-foreground"
-                    : "border-transparent hover:scale-110"
+                    ? "border-foreground"
+                    : "border-transparent hover:border-foreground/40"
                 }`}
                 style={{ backgroundColor: c.value }}
                 aria-label={`Filter by ${c.name}`}
@@ -138,8 +138,8 @@ export function MessageGrid({
 
       {/* Infinite scroll sentinel */}
       {visibleCount < messages.length && (
-        <div ref={sentinelRef} className="flex justify-center py-8">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent" />
+        <div ref={sentinelRef} className="flex justify-center py-8 text-xs text-muted-foreground">
+          Loading more...
         </div>
       )}
     </div>

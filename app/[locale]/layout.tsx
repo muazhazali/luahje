@@ -1,6 +1,6 @@
 import React from "react"
 import type { Viewport } from 'next'
-import { IM_Fell_DW_Pica } from 'next/font/google'
+import { IM_Fell_DW_Pica, Source_Sans_3 } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -13,6 +13,11 @@ const imFellDWPica = IM_Fell_DW_Pica({
   style: 'italic',
   subsets: ['latin'], 
   variable: '--font-im-fell' 
+})
+const sourceSans = Source_Sans_3({
+  weight: ['400', '500', '600'],
+  subsets: ['latin'],
+  variable: '--font-source-sans'
 })
 
 export const viewport: Viewport = {
@@ -55,7 +60,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body className={`${imFellDWPica.variable} font-sans antialiased`}>
+      <body className={`${imFellDWPica.variable} ${sourceSans.variable} font-sans antialiased`}>
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

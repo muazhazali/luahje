@@ -14,7 +14,7 @@ export function MessageCard({ message, onClick }: MessageCardProps) {
   return (
     <button
       onClick={() => onClick(message)}
-      className="group w-full cursor-pointer rounded-2xl p-5 text-left transition-all duration-300 hover:scale-[1.02] hover:shadow-xl md:p-6"
+      className="group w-full cursor-pointer rounded-2xl border border-white/40 p-5 text-left shadow-sm md:p-6"
       style={{ backgroundColor: message.color, color: textColor }}
       aria-label={`Message to ${message.to}. Click to read full message.`}
     >

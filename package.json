@@ -5,9 +5,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "pages:build": "npx @cloudflare/next-on-pages",
-    "preview": "npm run pages:build && wrangler pages dev",
-    "deploy": "npm run pages:build && wrangler pages deploy",
     "start": "next start",
     "pb:setup": "node scripts/setup-pocketbase.mjs",
     "web:smoke": "node scripts/smoke-web.mjs",
@@ -67,7 +64,6 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.13.16",
     "@tailwindcss/postcss": "^4.1.13",
     "@types/node": "^22",
     "@types/react": "^19",
@@ -75,7 +71,6 @@
     "postcss": "^8.5",
     "tailwindcss": "^3.4.17",
     "typescript": "5.7.3",
-    "vercel": "^50.12.1",
-    "wrangler": "^4.63.0"
+    "vercel": "^50.12.1"
   }
 }

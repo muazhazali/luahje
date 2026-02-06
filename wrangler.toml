@@ -1,9 +1,0 @@
-name = "luah-je"
-compatibility_date = "2026-02-06"
-compatibility_flags = ["nodejs_compat"]
-pages_build_output_dir = ".vercel/output/static"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "unsent_messages"
-database_id = "5d8e7ff2-1730-494e-852b-4c324a83172a"

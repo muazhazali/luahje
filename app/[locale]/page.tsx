@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo, useCallback, useEffect } from "react"
+import { useTranslations } from 'next-intl'
 import type { UnsentMessage, SortMode } from "@/lib/types"
 import { SiteHeader } from "@/components/site-header"
 import { MessageGrid } from "@/components/message-grid"
@@ -9,6 +10,7 @@ import { SearchModal } from "@/components/search-modal"
 import { MessageDetail } from "@/components/message-detail"
 
 export default function Page() {
+  const t = useTranslations();
   const [messages, setMessages] = useState<UnsentMessage[]>([])
   const [sortMode, setSortMode] = useState<SortMode>("newest")
   const [searchQuery, setSearchQuery] = useState("")
@@ -120,19 +122,18 @@ export default function Page() {
         <section className="border-b border-border/40 bg-secondary/30">
           <div className="mx-auto flex max-w-7xl flex-col items-center px-4 py-16 text-center md:py-24">
             <h2 className="text-balance text-3xl font-semibold tracking-tight text-foreground md:text-5xl">
-              Words we never said,
+              {t('hero.title')}
               <br />
-              <span className="text-muted-foreground">feelings we always felt</span>
+              <span className="text-muted-foreground">{t('hero.subtitle')}</span>
             </h2>
             <p className="mt-4 max-w-lg text-pretty text-sm leading-relaxed text-muted-foreground md:text-base">
-              A digital archive of anonymous messages to the people we loved,
-              lost, or never had the courage to speak to.
+              {t('hero.description')}
             </p>
             <button
               onClick={() => setSubmitOpen(true)}
               className="mt-8 h-11 rounded-full bg-foreground px-6 text-sm font-medium text-background transition-opacity hover:opacity-90"
             >
-              Write your unsent message
+              {t('hero.cta')}
             </button>
           </div>
         </section>
@@ -171,7 +172,7 @@ export default function Page() {
 
       {/* Footer */}
       <footer className="border-t border-border/40 py-8 text-center text-xs text-muted-foreground">
-        <p>Luah Je &mdash; Anonymous. Cathartic. Human.</p>
+        <p>{t('footer.tagline')}</p>
       </footer>
     </div>
   )

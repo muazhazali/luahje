@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, useCallback } from "react"
+import { useTranslations } from 'next-intl'
 import type { UnsentMessage, SortMode } from "@/lib/types"
 import { MESSAGE_COLORS } from "@/lib/types"
 import { MessageCard } from "./message-card"
@@ -27,6 +28,7 @@ export function MessageGrid({
   onMessageClick,
   searchQuery,
 }: MessageGridProps) {
+  const t = useTranslations();
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
   const sentinelRef = useRef<HTMLDivElement>(null)
 
@@ -109,9 +111,9 @@ export function MessageGrid({
             className="h-8 rounded-lg border border-border bg-secondary/50 px-2 text-xs text-foreground outline-none"
             aria-label="Sort messages"
           >
-            <option value="newest">Newest</option>
-            <option value="oldest">Oldest</option>
-            <option value="random">Random</option>
+            <option value="newest">{t('sort.newest')}</option>
+            <option value="oldest">{t('sort.oldest')}</option>
+            <option value="random">{t('sort.random')}</option>
           </select>
         </div>
       </div>
@@ -119,9 +121,9 @@ export function MessageGrid({
       {/* Grid */}
       {visibleMessages.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-24 text-center">
-          <p className="text-lg font-medium text-foreground">No messages found</p>
+          <p className="text-lg font-medium text-foreground">{t('empty.noMessages')}</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Try a different search or filter
+            {t('empty.noMessagesDescription')}
           </p>
         </div>
       ) : (

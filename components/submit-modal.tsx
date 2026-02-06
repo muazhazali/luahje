@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslations } from 'next-intl'
 import {
   Dialog,
   DialogContent,
@@ -19,6 +20,7 @@ interface SubmitModalProps {
 const MAX_CHARS = 500
 
 export function SubmitModal({ open, onOpenChange, onSubmit }: SubmitModalProps) {
+  const t = useTranslations();
   const [to, setTo] = useState("")
   const [message, setMessage] = useState("")
   const [selectedColor, setSelectedColor] = useState(MESSAGE_COLORS[0].value)
@@ -30,10 +32,10 @@ export function SubmitModal({ open, onOpenChange, onSubmit }: SubmitModalProps) 
 
   async function handleSubmit() {
     const newErrors: typeof errors = {}
-    if (!to.trim()) newErrors.to = "Please enter a name"
-    if (!message.trim()) newErrors.message = "Please write your message"
-    if (message.length > MAX_CHARS) newErrors.message = "Message is too long"
-    if (!agreed) newErrors.agreed = "You must agree to continue"
+    if (!to.trim()) newErrors.to = t('message.errorName')
+    if (!message.trim()) newErrors.message = t('message.errorMessage')
+    if (message.length > MAX_CHARS) newErrors.message = t('message.errorTooLong')
+    if (!agreed) newErrors.agreed = t('message.errorAgree')
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
       return
@@ -52,9 +54,9 @@ export function SubmitModal({ open, onOpenChange, onSubmit }: SubmitModalProps) 
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle className="text-xl">Write your unsent message</DialogTitle>
+          <DialogTitle className="text-xl">{t('message.writeTitle')}</DialogTitle>
           <DialogDescription>
-            Share the words you never said. It stays anonymous.
+            {t('message.writeDescription')}
           </DialogDescription>
         </DialogHeader>
 
@@ -68,25 +70,25 @@ export function SubmitModal({ open, onOpenChange, onSubmit }: SubmitModalProps) 
               className="mb-2 text-xs font-semibold uppercase tracking-widest opacity-70"
               style={{ color: textColor }}
             >
-              To: {to || "..."}
+              {t('message.to')}: {to || "..."}
             </p>
             <p
               className="min-h-[48px] text-sm leading-relaxed"
               style={{ color: textColor }}
             >
-              {message || "Your message will appear here..."}
+              {message || t('message.previewPlaceholder')}
             </p>
           </div>
 
           {/* To field */}
           <div>
             <label htmlFor="to-field" className="mb-1.5 block text-sm font-medium text-foreground">
-              To
+              {t('message.to')}
             </label>
             <input
               id="to-field"
               type="text"
-              placeholder="Their name or initials"
+              placeholder={t('message.toPlaceholder')}
               value={to}
               onChange={(e) => {
                 setTo(e.target.value)
@@ -101,11 +103,11 @@ export function SubmitModal({ open, onOpenChange, onSubmit }: SubmitModalProps) 
           {/* Message field */}
           <div>
             <label htmlFor="message-field" className="mb-1.5 block text-sm font-medium text-foreground">
-              Your message
+              {t('message.yourMessage')}
             </label>
             <textarea
               id="message-field"
-              placeholder="The words you never sent..."
+              placeholder={t('message.messagePlaceholder')}
               value={message}
               onChange={(e) => {
                 setMessage(e.target.value)
@@ -123,14 +125,14 @@ export function SubmitModal({ open, onOpenChange, onSubmit }: SubmitModalProps) 
                   charsLeft < 50 ? "text-destructive" : "text-muted-foreground"
                 }`}
               >
-                {charsLeft} characters remaining
+                {charsLeft} {t('message.charactersRemaining')}
               </p>
             </div>
           </div>
 
           {/* Color picker */}
           <div>
-            <p className="mb-2 text-sm font-medium text-foreground">Choose a color</p>
+            <p className="mb-2 text-sm font-medium text-foreground">{t('message.chooseColor')}</p>
             <div className="flex flex-wrap gap-2">
               {MESSAGE_COLORS.map((c) => (
                 <button
@@ -162,8 +164,7 @@ export function SubmitModal({ open, onOpenChange, onSubmit }: SubmitModalProps) 
               className="mt-0.5 h-4 w-4 rounded border-border accent-foreground"
             />
             <span>
-              I confirm I am 18+ and agree that this message is anonymous and cannot be
-              edited or deleted once submitted.
+              {t('message.agreement')}
             </span>
           </label>
           {errors.agreed && <p className="-mt-3 text-xs text-destructive">{errors.agreed}</p>}
@@ -173,7 +174,7 @@ export function SubmitModal({ open, onOpenChange, onSubmit }: SubmitModalProps) 
             onClick={handleSubmit}
             className="h-11 w-full rounded-lg bg-foreground text-sm font-medium text-background transition-opacity hover:opacity-90 disabled:opacity-50"
           >
-            Send to Luah Je
+            {t('message.submit')}
           </button>
         </div>
       </DialogContent>

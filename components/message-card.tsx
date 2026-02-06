@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import type { UnsentMessage } from "@/lib/types"
 import { getContrastColor } from "@/lib/types"
 
@@ -9,6 +10,7 @@ interface MessageCardProps {
 }
 
 export function MessageCard({ message, onClick }: MessageCardProps) {
+  const t = useTranslations()
   const textColor = getContrastColor(message.color)
 
   return (
@@ -22,7 +24,7 @@ export function MessageCard({ message, onClick }: MessageCardProps) {
         className="mb-3 text-xs font-semibold uppercase tracking-widest opacity-70"
         style={{ color: textColor }}
       >
-        To: {message.to}
+        {t("message.to")}: {message.to}
       </p>
       <p
         className="text-sm leading-relaxed md:text-base"

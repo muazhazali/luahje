@@ -29,6 +29,7 @@ export function MessageGrid({
   searchQuery,
 }: MessageGridProps) {
   const t = useTranslations();
+  const messageLabel = messages.length === 1 ? t('message.message_one') : t('message.messages')
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
   const sentinelRef = useRef<HTMLDivElement>(null)
 
@@ -66,7 +67,7 @@ export function MessageGrid({
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
           <p className="text-sm text-muted-foreground">
-            {messages.length} {messages.length === 1 ? "message" : "messages"}
+            {messages.length} {messageLabel}
             {searchQuery && (
               <span>
                 {" "}for <span className="font-medium text-foreground">{`"${searchQuery}"`}</span>

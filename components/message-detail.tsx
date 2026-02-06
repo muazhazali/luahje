@@ -82,28 +82,33 @@ export function MessageDetail({ message, open, onOpenChange }: MessageDetailProp
 
   const handleShare = useCallback(async () => {
     if (!message) return
-    const text = `To: ${message.to}\n\n${message.message}\n\n- Luah Je`
-    const url = typeof window !== "undefined" ? window.location.href : ""
+    const shareUrl =
+      typeof window !== "undefined"
+        ? (() => {
+            const url = new URL(window.location.href)
+            url.searchParams.set("message", message.id)
+            return url.toString()
+          })()
+        : ""
 
     if (navigator.share) {
       try {
-        await navigator.share({ text, url })
+        await navigator.share({ url: shareUrl })
       } catch {
         // User cancelled
       }
     } else {
-      await navigator.clipboard.writeText(`${text}\n${url}`)
+      await navigator.clipboard.writeText(shareUrl)
     }
   }, [message])
 
   if (!message) return null
 
   const textColor = getContrastColor(message.color)
-  const dateStr = new Date(message.createdAt).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })
+  const dateStr = new Intl.DateTimeFormat(undefined, {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(new Date(message.createdAt))
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

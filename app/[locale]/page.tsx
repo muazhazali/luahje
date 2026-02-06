@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo, useCallback, useEffect } from "react"
+import { useSearchParams } from "next/navigation"
 import { useTranslations } from 'next-intl'
 import type { UnsentMessage, SortMode } from "@/lib/types"
 import { SiteHeader } from "@/components/site-header"
@@ -11,6 +12,7 @@ import { MessageDetail } from "@/components/message-detail"
 
 export default function Page() {
   const t = useTranslations();
+  const searchParams = useSearchParams()
   const [messages, setMessages] = useState<UnsentMessage[]>([])
   const [sortMode, setSortMode] = useState<SortMode>("newest")
   const [searchQuery, setSearchQuery] = useState("")
@@ -19,6 +21,7 @@ export default function Page() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [selectedMessage, setSelectedMessage] = useState<UnsentMessage | null>(null)
   const [detailOpen, setDetailOpen] = useState(false)
+  const messageIdFromUrl = searchParams.get("message")
 
   const loadMessages = useCallback(async () => {
     try {
@@ -38,6 +41,15 @@ export default function Page() {
   useEffect(() => {
     void loadMessages()
   }, [loadMessages])
+
+  useEffect(() => {
+    if (!messageIdFromUrl) return
+    const match = messages.find((msg) => msg.id === messageIdFromUrl)
+    if (match) {
+      setSelectedMessage(match)
+      setDetailOpen(true)
+    }
+  }, [messageIdFromUrl, messages])
 
   // Keyboard shortcut
   useEffect(() => {

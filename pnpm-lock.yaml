@@ -125,6 +125,9 @@ importers:
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      pocketbase:
+        specifier: ^0.26.8
+        version: 0.26.8
       react:
         specifier: ^19
         version: 19.2.4
@@ -3397,6 +3400,9 @@ packages:
 
   po-parser@2.1.1:
     resolution: {integrity: sha512-ECF4zHLbUItpUgE3OTtLKlPjeBN+fKEczj2zYjDfCGOzicNs0GK3Vg2IoAYwx7LH/XYw43fZQP6xnZ4TkNxSLQ==}
+
+  pocketbase@0.26.8:
+    resolution: {integrity: sha512-aQ/ewvS7ncvAE8wxoW10iAZu6ElgbeFpBhKPnCfvRovNzm2gW8u/sQNPGN6vNgVEagz44kK//C61oKjfa+7Low==}
 
   postcss-import@15.1.0:
     resolution: {integrity: sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==}
@@ -7004,6 +7010,8 @@ snapshots:
   pirates@4.0.7: {}
 
   po-parser@2.1.1: {}
+
+  pocketbase@0.26.8: {}
 
   postcss-import@15.1.0(postcss@8.5.6):
     dependencies:

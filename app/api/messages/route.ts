@@ -1,12 +1,10 @@
-import { getRequestContext } from "@cloudflare/next-on-pages"
+import PocketBase from "pocketbase"
 import type { UnsentMessage } from "@/lib/types"
 import { seedMessages } from "@/lib/seed-messages"
 
-export const runtime = "edge"
+const COLLECTION_NAME = "messages"
 
-const TABLE_NAME = "messages"
-
-type D1ResultRow = {
+type MessageRecord = {
   id: string
   recipient: string
   body: string
@@ -14,61 +12,65 @@ type D1ResultRow = {
   created_at: string
 }
 
-type Env = {
-  DB: D1Database
-}
-
-function getDatabase() {
-  const { env } = getRequestContext<Env>()
-  const db = env.DB
-  if (!db) {
-    throw new Error("Missing D1 binding. Ensure DB is configured in wrangler.toml.")
+function getPocketBaseConfig() {
+  const url = process.env.POCKETBASE_URL
+  const email = process.env.POCKETBASE_SU_EMAIL
+  const password = process.env.POCKETBASE_SU_PASSWORD
+  if (!url || !email || !password) {
+    throw new Error("Missing PocketBase environment variables.")
   }
-  return db
+  return { url, email, password }
 }
 
-function mapRow(row: D1ResultRow): UnsentMessage {
+async function getAuthedPocketBase() {
+  const { url, email, password } = getPocketBaseConfig()
+  const pb = new PocketBase(url)
+  await pb.collection("_superusers").authWithPassword(email, password)
+  return pb
+}
+
+function mapRecord(record: MessageRecord): UnsentMessage {
   return {
-    id: row.id,
-    to: row.recipient,
-    message: row.body,
-    color: row.color,
-    createdAt: row.created_at,
+    id: record.id,
+    to: record.recipient,
+    message: record.body,
+    color: record.color,
+    createdAt: record.created_at,
   }
 }
 
-async function ensureSeeded(db: ReturnType<typeof getDatabase>) {
-  const countRow = await db.prepare(`SELECT COUNT(*) as count FROM ${TABLE_NAME}`).first()
-  const count = Number(countRow?.count ?? 0)
-  if (count > 0) return
+function toPocketBaseDate(value: string) {
+  return value.replace("T", " ")
+}
 
-  const inserts = seedMessages.map((message) =>
-    db
-      .prepare(
-        `INSERT INTO ${TABLE_NAME} (id, recipient, body, color, created_at) VALUES (?1, ?2, ?3, ?4, ?5)`
-      )
-      .bind(message.id, message.to, message.message, message.color, message.createdAt)
-  )
+async function ensureSeeded(pb: PocketBase) {
+  const firstPage = await pb.collection(COLLECTION_NAME).getList(1, 1)
+  if (firstPage.totalItems > 0) return
 
-  await db.batch(inserts)
+  for (const message of seedMessages) {
+    await pb.collection(COLLECTION_NAME).create({
+      recipient: message.to,
+      body: message.message,
+      color: message.color,
+      created_at: toPocketBaseDate(message.createdAt),
+    })
+  }
 }
 
 export async function GET() {
-  const db = getDatabase()
-  await ensureSeeded(db)
+  const pb = await getAuthedPocketBase()
+  await ensureSeeded(pb)
 
-  const { results } = await db
-    .prepare(
-      `SELECT id, recipient, body, color, created_at FROM ${TABLE_NAME} ORDER BY created_at DESC`
-    )
-    .all()
+  const records = await pb.collection(COLLECTION_NAME).getFullList({
+    sort: "-created_at",
+  })
 
-  return Response.json(results.map(mapRow))
+  return Response.json(records.map((record) => mapRecord(record as MessageRecord)))
 }
 
 export async function POST(request: Request) {
-  const db = getDatabase()
-  await ensureSeeded(db)
+  const pb = await getAuthedPocketBase()
+  await ensureSeeded(pb)
   const body = (await request.json()) as {
     to?: string
     message?: string
@@ -83,20 +85,12 @@ export async function POST(request: Request) {
     return Response.json({ error: "Missing required fields." }, { status: 400 })
   }
 
-  const newMessage: UnsentMessage = {
-    id: `msg-${crypto.randomUUID()}`,
-    to,
-    message,
+  const record = await pb.collection(COLLECTION_NAME).create({
+    recipient: to,
+    body: message,
     color,
-    createdAt: new Date().toISOString(),
-  }
+    created_at: toPocketBaseDate(new Date().toISOString()),
+  })
 
-  await db
-    .prepare(
-      `INSERT INTO ${TABLE_NAME} (id, recipient, body, color, created_at) VALUES (?1, ?2, ?3, ?4, ?5)`
-    )
-    .bind(newMessage.id, newMessage.to, newMessage.message, newMessage.color, newMessage.createdAt)
-    .run()
-
-  return Response.json(newMessage, { status: 201 })
+  return Response.json(mapRecord(record as MessageRecord), { status: 201 })
 }

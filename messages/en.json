@@ -1,0 +1,66 @@
+{
+  "metadata": {
+    "title": "Luah Je",
+    "description": "A digital archive of anonymous messages to the people we loved, lost, or never had the courage to speak to."
+  },
+  "hero": {
+    "title": "Words we never said,",
+    "subtitle": "feelings we always felt",
+    "description": "A digital archive of anonymous messages to the people we loved, lost, or never had the courage to speak to.",
+    "cta": "Write your unsent message"
+  },
+  "footer": {
+    "tagline": "Luah Je — Anonymous. Cathartic. Human."
+  },
+  "header": {
+    "search": "Search",
+    "searchPlaceholder": "Search messages...",
+    "write": "Write",
+    "tagline": "Messages never sent, feelings never shared"
+  },
+  "search": {
+    "title": "Search Luah Je",
+    "description": "Search by name, initials, or words from a message",
+    "placeholder": "e.g. Sarah, sorry, miss you...",
+    "clear": "Clear search"
+  },
+  "sort": {
+    "newest": "Newest",
+    "oldest": "Oldest",
+    "random": "Random"
+  },
+  "message": {
+    "to": "To",
+    "from": "From",
+    "anonymous": "Anonymous",
+    "submit": "Send to Luah Je",
+    "cancel": "Cancel",
+    "recipient": "Who is this for?",
+    "yourMessage": "Your message",
+    "chooseColor": "Choose a color",
+    "close": "Close",
+    "writeTitle": "Write your unsent message",
+    "writeDescription": "Share the words you never said. It stays anonymous.",
+    "toPlaceholder": "Their name or initials",
+    "messagePlaceholder": "The words you never sent...",
+    "previewPlaceholder": "Your message will appear here...",
+    "charactersRemaining": "characters remaining",
+    "agreement": "I confirm I am 18+ and agree that this message is anonymous and cannot be edited or deleted once submitted.",
+    "errorName": "Please enter a name",
+    "errorMessage": "Please write your message",
+    "errorTooLong": "Message is too long",
+    "errorAgree": "You must agree to continue",
+    "download": "Download",
+    "share": "Share",
+    "messages": "messages",
+    "message_one": "message"
+  },
+  "filters": {
+    "all": "All Colors",
+    "sortBy": "Sort by"
+  },
+  "empty": {
+    "noMessages": "No messages found",
+    "noMessagesDescription": "Try adjusting your search or filters"
+  }
+}

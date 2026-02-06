@@ -1,30 +1,16 @@
-import React from "react"
-import type { Metadata, Viewport } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
+import type { ReactNode } from 'react';
+import { locales } from '@/i18n';
 
-import './globals.css'
+type Props = {
+  children: ReactNode;
+};
 
-const _inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
-const _playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
-
-export const metadata: Metadata = {
-  title: 'Luah Je',
-  description: 'A digital archive of anonymous messages to the people we loved, lost, or never had the courage to speak to.',
+// Since we have a `not-found.tsx` page on the root, a layout file
+// is required, even if it's just passing children through.
+export default function RootLayout({ children }: Props) {
+  return children;
 }
 
-export const viewport: Viewport = {
-  themeColor: '#fafaf9',
-  userScalable: true,
-}
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
-  return (
-    <html lang="en">
-      <body className="font-sans antialiased">{children}</body>
-    </html>
-  )
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
 }

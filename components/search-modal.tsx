@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import { useTranslations } from 'next-intl'
 import {
   Dialog,
   DialogContent,
@@ -18,6 +19,7 @@ interface SearchModalProps {
 }
 
 export function SearchModal({ open, onOpenChange, query, onQueryChange }: SearchModalProps) {
+  const t = useTranslations();
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -30,9 +32,9 @@ export function SearchModal({ open, onOpenChange, query, onQueryChange }: Search
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Search Luah Je</DialogTitle>
+          <DialogTitle>{t('search.title')}</DialogTitle>
           <DialogDescription>
-            Search by name, initials, or words from a message
+            {t('search.description')}
           </DialogDescription>
         </DialogHeader>
         <div className="relative mt-2">
@@ -40,7 +42,7 @@ export function SearchModal({ open, onOpenChange, query, onQueryChange }: Search
           <input
             ref={inputRef}
             type="text"
-            placeholder="e.g. Sarah, sorry, miss you..."
+            placeholder={t('search.placeholder')}
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
             onKeyDown={(e) => {
@@ -54,7 +56,7 @@ export function SearchModal({ open, onOpenChange, query, onQueryChange }: Search
             onClick={() => onQueryChange("")}
             className="mt-1 text-xs text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
           >
-            Clear search
+            {t('search.clear')}
           </button>
         )}
       </DialogContent>

@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useRef } from "react"
+import { useTranslations } from 'next-intl'
 import {
   Dialog,
   DialogContent,
@@ -19,6 +20,7 @@ interface MessageDetailProps {
 }
 
 export function MessageDetail({ message, open, onOpenChange }: MessageDetailProps) {
+  const t = useTranslations();
   const cardRef = useRef<HTMLDivElement>(null)
 
   const handleDownload = useCallback(() => {
@@ -122,7 +124,7 @@ export function MessageDetail({ message, open, onOpenChange }: MessageDetailProp
             className="mb-4 text-xs font-semibold uppercase tracking-widest opacity-70"
             style={{ color: textColor }}
           >
-            To: {message.to}
+            {t('message.to')}: {message.to}
           </p>
           <p
             className="text-base leading-relaxed md:text-lg"
@@ -145,7 +147,7 @@ export function MessageDetail({ message, open, onOpenChange }: MessageDetailProp
             aria-label="Download as image"
           >
             <Download className="h-3.5 w-3.5" />
-            Download
+            {t('message.download')}
           </button>
           <button
             onClick={handleShare}
@@ -153,7 +155,7 @@ export function MessageDetail({ message, open, onOpenChange }: MessageDetailProp
             aria-label="Share this message"
           >
             <Share2 className="h-3.5 w-3.5" />
-            Share
+            {t('message.share')}
           </button>
         </div>
       </DialogContent>

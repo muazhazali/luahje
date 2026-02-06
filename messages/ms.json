@@ -1,0 +1,66 @@
+{
+  "metadata": {
+    "title": "Luah Je",
+    "description": "Arkib digital mesej tanpa nama kepada orang yang kita sayangi, kehilangan, atau tidak pernah ada keberanian untuk bercakap."
+  },
+  "hero": {
+    "title": "Kata-kata yang tidak pernah kita ucapkan,",
+    "subtitle": "perasaan yang sentiasa kita rasa",
+    "description": "Arkib digital mesej tanpa nama kepada orang yang kita sayangi, kehilangan, atau tidak pernah ada keberanian untuk bercakap.",
+    "cta": "Tulis mesej anda"
+  },
+  "footer": {
+    "tagline": "Luah Je — Tanpa Nama. Pelepasan. Kemanusiaan."
+  },
+  "header": {
+    "search": "Cari",
+    "searchPlaceholder": "Cari mesej...",
+    "write": "Tulis",
+    "tagline": "Mesej tidak pernah dihantar, perasaan tidak pernah dikongsi"
+  },
+  "search": {
+    "title": "Cari di Luah Je",
+    "description": "Cari mengikut nama, inisial, atau perkataan dari mesej",
+    "placeholder": "cth: Sarah, maaf, rindu...",
+    "clear": "Kosongkan carian"
+  },
+  "sort": {
+    "newest": "Terbaru",
+    "oldest": "Terlama",
+    "random": "Rawak"
+  },
+  "message": {
+    "to": "Kepada",
+    "from": "Dari",
+    "anonymous": "Tanpa Nama",
+    "submit": "Hantar ke Luah Je",
+    "cancel": "Batal",
+    "recipient": "Untuk siapa ini?",
+    "yourMessage": "Mesej anda",
+    "chooseColor": "Pilih warna",
+    "close": "Tutup",
+    "writeTitle": "Tulis mesej anda yang tidak dihantar",
+    "writeDescription": "Kongsi kata-kata yang tidak pernah anda ucapkan. Ia kekal tanpa nama.",
+    "toPlaceholder": "Nama atau inisial mereka",
+    "messagePlaceholder": "Kata-kata yang tidak pernah anda hantar...",
+    "previewPlaceholder": "Mesej anda akan muncul di sini...",
+    "charactersRemaining": "aksara lagi",
+    "agreement": "Saya mengesahkan bahawa saya berumur 18 tahun ke atas dan bersetuju bahawa mesej ini tanpa nama dan tidak boleh diedit atau dipadam setelah dihantar.",
+    "errorName": "Sila masukkan nama",
+    "errorMessage": "Sila tulis mesej anda",
+    "errorTooLong": "Mesej terlalu panjang",
+    "errorAgree": "Anda mesti bersetuju untuk meneruskan",
+    "download": "Muat turun",
+    "share": "Kongsi",
+    "messages": "mesej",
+    "message_one": "mesej"
+  },
+  "filters": {
+    "all": "Semua Warna",
+    "sortBy": "Susun mengikut"
+  },
+  "empty": {
+    "noMessages": "Tiada mesej dijumpai",
+    "noMessagesDescription": "Cuba ubah carian atau penapis anda"
+  }
+}

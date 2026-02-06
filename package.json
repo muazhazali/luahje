@@ -10,6 +10,7 @@
     "deploy": "npm run pages:build && wrangler pages deploy",
     "start": "next start",
     "pb:setup": "node scripts/setup-pocketbase.mjs",
+    "web:smoke": "node scripts/smoke-web.mjs",
     "lint": "eslint ."
   },
   "dependencies": {

@@ -14,26 +14,35 @@ function parseEnvFile(contents) {
   for (const line of lines) {
     const trimmed = line.trim()
     if (!trimmed || trimmed.startsWith("#")) continue
-    const equalsIndex = trimmed.indexOf("=")
+    const normalized = trimmed.startsWith("export ") ? trimmed.slice(7).trim() : trimmed
+    const equalsIndex = normalized.indexOf("=")
     if (equalsIndex === -1) continue
-    const key = trimmed.slice(0, equalsIndex).trim()
-    const value = trimmed.slice(equalsIndex + 1).trim()
+    const key = normalized.slice(0, equalsIndex).trim()
+    let value = normalized.slice(equalsIndex + 1).trim()
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1)
+    }
     env[key] = value
   }
   return env
 }
 
 function getEnvConfig() {
-  if (!fs.existsSync(envPath)) {
-    throw new Error(`Missing .env.local at ${envPath}`)
-  }
-  const fileContents = fs.readFileSync(envPath, "utf8")
-  const env = parseEnvFile(fileContents)
+  const hasEnvFile = fs.existsSync(envPath)
+  const env = hasEnvFile ? parseEnvFile(fs.readFileSync(envPath, "utf8")) : {}
   const url = env.POCKETBASE_URL || process.env.POCKETBASE_URL
   const email = env.POCKETBASE_SU_EMAIL || process.env.POCKETBASE_SU_EMAIL
   const password = env.POCKETBASE_SU_PASSWORD || process.env.POCKETBASE_SU_PASSWORD
   if (!url || !email || !password) {
-    throw new Error("Missing POCKETBASE_URL/POCKETBASE_SU_EMAIL/POCKETBASE_SU_PASSWORD.")
+    throw new Error(
+      `Missing POCKETBASE_URL/POCKETBASE_SU_EMAIL/POCKETBASE_SU_PASSWORD in ${envPath} or process env.`
+    )
+  }
+  if (!hasEnvFile) {
+    console.warn(`.env.local not found at ${envPath}; using process env.`)
   }
   return { url, email, password }
 }
@@ -96,7 +105,13 @@ async function verifyWriteRead(pb) {
 }
 
 function toPocketBaseDate(value) {
-  return value.replace("T", " ")
+  if (value instanceof Date) {
+    return value.toISOString().replace("T", " ")
+  }
+  if (typeof value === "string" && value.includes("T")) {
+    return value.replace("T", " ")
+  }
+  return value
 }
 
 async function run() {

@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:cf": "npx opennextjs-cloudflare build --dangerouslyUseUnsupportedNextVersion",
     "start": "next start",
+    "deploy:cf": "npx opennextjs-cloudflare deploy",
     "pb:setup": "node scripts/setup-pocketbase.mjs",
     "web:smoke": "node scripts/smoke-web.mjs",
     "lint": "eslint ."
@@ -64,10 +66,12 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "^1.16.3",
     "@tailwindcss/postcss": "^4.1.13",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "opennextjs-cloudflare": "^1.0.0",
     "postcss": "^8.5",
     "tailwindcss": "^3.4.17",
     "typescript": "5.7.3",

@@ -41,19 +41,19 @@ type MessageRecord = {
 
 function getPocketBaseConfig() {
   const url = process.env.POCKETBASE_URL
-  const email = process.env.POCKETBASE_SU_EMAIL
-  const password = process.env.POCKETBASE_SU_PASSWORD
-  if (!url || !email || !password) {
+  if (!url) {
     throw new Error("Missing PocketBase environment variables.")
   }
-  return { url, email, password }
+  return { url }
+}
+
+function hasPocketBaseConfig() {
+  return Boolean(process.env.POCKETBASE_URL)
 }
 
 async function getAuthedPocketBase() {
-  const { url, email, password } = getPocketBaseConfig()
-  const pb = new PocketBase(url)
-  await pb.collection("_superusers").authWithPassword(email, password)
-  return pb
+  const { url } = getPocketBaseConfig()
+  return new PocketBase(url)
 }
 
 function mapRecord(record: MessageRecord): UnsentMessage {
@@ -195,16 +195,25 @@ export async function GET(request: Request) {
       )
     }
 
-    const pb = await getAuthedPocketBase()
-    await ensureSeeded(pb)
+    if (!hasPocketBaseConfig()) {
+      return jsonResponse(seedMessages)
+    }
 
-    const records = await pb.collection(COLLECTION_NAME).getList(1, MAX_GET_ITEMS, {
-      sort: "-created_at",
-    })
+    try {
+      const pb = await getAuthedPocketBase()
+      await ensureSeeded(pb)
 
-    return jsonResponse(
-      records.items.map((record) => mapRecord(record as unknown as MessageRecord))
-    )
+      const records = await pb.collection(COLLECTION_NAME).getList(1, MAX_GET_ITEMS, {
+        sort: "-created_at",
+      })
+
+      return jsonResponse(
+        records.items.map((record) => mapRecord(record as unknown as MessageRecord))
+      )
+    } catch (error) {
+      console.error("GET /api/messages pocketbase failed", error)
+      return jsonResponse(seedMessages)
+    }
   } catch (error) {
     console.error("GET /api/messages failed", error)
     return jsonResponse({ error: "Unable to load messages." }, { status: 500 })
@@ -269,6 +278,13 @@ export async function POST(request: Request) {
 
     if (countLinks(message) > 2) {
       return jsonResponse({ error: "Too many links in message." }, { status: 400 })
+    }
+
+    if (!hasPocketBaseConfig()) {
+      return jsonResponse(
+        { error: "Message service is unavailable. Please try again later." },
+        { status: 503 }
+      )
     }
 
     const pb = await getAuthedPocketBase()

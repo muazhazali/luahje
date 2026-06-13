@@ -13,3 +13,4 @@ node_modules/
 .DS_Store
 .pnpm-store
 .open-next
+/lib/generated/prisma

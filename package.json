@@ -8,12 +8,23 @@
     "build:cf": "npx opennextjs-cloudflare build --dangerouslyUseUnsupportedNextVersion",
     "start": "next start",
     "deploy:cf": "npx opennextjs-cloudflare deploy",
-    "pb:setup": "node scripts/setup-pocketbase.mjs",
     "web:smoke": "node scripts/smoke-web.mjs",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "db:up": "docker-compose up -d postgres",
+    "db:down": "docker-compose down",
+    "db:reset": "docker-compose down -v && docker-compose up -d postgres",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "db:generate": "prisma generate",
+    "postinstall": "prisma generate"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
+    "@prisma/client": "^6",
     "@radix-ui/react-accordion": "1.2.13",
     "@radix-ui/react-alert-dialog": "1.1.16",
     "@radix-ui/react-aspect-ratio": "1.1.9",
@@ -53,6 +64,7 @@
     "next-intl": "^4.13.0",
     "next-themes": "^0.4.6",
     "pocketbase": "^0.27.0",
+    "prisma": "^6",
     "react": "^19.2.7",
     "react-day-picker": "10.0.1",
     "react-dom": "^19.2.7",
@@ -74,6 +86,7 @@
     "opennextjs-cloudflare": "^1.0.0",
     "postcss": "^8.5.15",
     "tailwindcss": "^4.3.1",
+    "tsx": "^4.22.4",
     "typescript": "6.0.3",
     "vercel": "^54.13.0"
   },

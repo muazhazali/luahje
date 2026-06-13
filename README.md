@@ -4,6 +4,20 @@ A beautiful, anonymous platform for sharing "unsent" messages — those words yo
 
 ![Luahje Screenshot](https://placeholder-screenshot-url.com)
 
+## Quick Start
+
+**One command to get started:**
+
+```bash
+git clone https://github.com/muazhazali/luahje.git
+cd luahje
+./scripts/setup.sh
+```
+
+Then open http://localhost:3000
+
+That's it! The setup script handles everything: dependencies, database, migrations, and sample data.
+
 ## What is Luahje?
 
 Luahje (Malay for "letter") is a digital message board where users can:
@@ -83,56 +97,76 @@ luahje/
 ### Prerequisites
 
 - Node.js 20+
-- pnpm (or npm/yarn)
-- Docker + Docker Compose
+- pnpm: `npm install -g pnpm`
+- Docker + Docker Compose: https://docs.docker.com/get-docker/
 
-### 1. Clone and Install
+### Option 1: One-Command Setup (Recommended)
 
 ```bash
 git clone https://github.com/muazhazali/luahje.git
 cd luahje
-pnpm install
+./scripts/setup.sh
 ```
 
-### 2. Start PostgreSQL
+This script automatically:
+- ✅ Checks your prerequisites
+- ✅ Installs dependencies
+- ✅ Creates environment files
+- ✅ Starts PostgreSQL
+- ✅ Runs migrations
+- ✅ Seeds sample data
+
+### Option 2: Manual Setup
 
 ```bash
-# Start PostgreSQL and pgAdmin containers
+# Clone and install
+git clone https://github.com/muazhazali/luahje.git
+cd luahje
+pnpm install
+
+# Copy environment files
+cp .env.example .env
+cp .env.local.example .env.local
+
+# Start PostgreSQL
 pnpm db:up
 
-# Or manually:
-docker-compose up -d postgres
-```
-
-Wait for PostgreSQL to be ready:
-```bash
-docker exec luahje-postgres pg_isready -U luahje
-```
-
-### 3. Setup Database
-
-```bash
-# Run migrations
+# Setup database
 pnpm db:migrate
-
-# Seed with sample messages (16 unsent letters)
 pnpm db:seed
+
+# Start development server
+pnpm dev
 ```
 
-### 4. Start Development Server
+### Option 3: Using Make
 
 ```bash
-pnpm dev
+make setup   # One-time setup
+make dev     # Start development server
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Development Commands
 
+### Quick Start
+
+| Command | Description |
+|---------|-------------|
+| `./scripts/setup.sh` | One-command full setup |
+| `./scripts/dev.sh` | Quick start (DB + dev server) |
+| `make setup` | Setup using Make |
+| `make dev` | Start dev server using Make |
+| `make help` | Show all Make commands |
+
+### Package Scripts
+
 | Command | Description |
 |---------|-------------|
 | `pnpm dev` | Start Next.js dev server (Turbopack) |
 | `pnpm build` | Build for production |
+| `pnpm start` | Start production server |
 | `pnpm lint` | Run ESLint |
 | `pnpm db:up` | Start PostgreSQL Docker container |
 | `pnpm db:down` | Stop PostgreSQL container |
@@ -269,6 +303,21 @@ Submit a new message.
 3. Commit changes: `git commit -am 'Add new feature'`
 4. Push to branch: `git push origin feature/my-feature`
 5. Submit a pull request
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
+
+- Detailed setup instructions
+- Development workflow
+- Code style guidelines
+- Pull request process
+
+**Quick start for contributors:**
+```bash
+./scripts/setup.sh  # One-command setup
+./scripts/dev.sh    # Start developing
+```
 
 ## License
 

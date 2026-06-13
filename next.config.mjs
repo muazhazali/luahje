@@ -10,6 +10,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  allowedDevOrigins: ['192.168.1.112', 'luahje.muaz.app'],
 }
 
 export default withNextIntl(nextConfig);

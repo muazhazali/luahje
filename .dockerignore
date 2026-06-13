@@ -1,0 +1,66 @@
+# Dependencies
+node_modules
+.pnpm-store
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+.next
+.vercel
+dist
+.open-next
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+CHANGELOG.md
+CONTRIBUTING.md
+LICENSE
+*.md
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# Testing
+coverage
+.nyc_output
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# CI
+.github
+.gitlab-ci.yml
+.travis.yml
+
+# Misc
+*.log
+scripts/setup.sh
+scripts/dev.sh
+scripts/smoke-web.mjs
+scripts/setup-pocketbase.mjs

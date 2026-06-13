@@ -18,12 +18,14 @@ services:
       timeout: 5s
       retries: 5
     restart: unless-stopped
+    networks:
+      - luahje-network
 
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: luahje-pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@luahje.local
+      PGADMIN_DEFAULT_EMAIL: admin@luahje.dev
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - "5050:80"
@@ -31,7 +33,34 @@ services:
       postgres:
         condition: service_healthy
     restart: unless-stopped
+    networks:
+      - luahje-network
+
+  # Optional: Run the Next.js app in Docker
+  # Uncomment this section if you want to run the entire app in Docker
+  # Note: Requires DATABASE_URL to use 'postgres' as host instead of 'localhost'
+  #
+  # app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: luahje-app
+  #   environment:
+  #     - DATABASE_URL=postgresql://luahje:luahje_dev@postgres:5432/luahje?schema=public
+  #     - NEXT_PUBLIC_SITE_URL=http://localhost:3000
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #   restart: unless-stopped
+  #   networks:
+  #     - luahje-network
 
 volumes:
   postgres_data:
     driver: local
+
+networks:
+  luahje-network:
+    driver: bridge

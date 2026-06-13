@@ -106,7 +106,7 @@ export default function PageClient() {
         filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
         break
       case "oldest":
-        filtered.sort((a, b) => new Date(a.createdAt).getTime() - new Date(a.createdAt).getTime())
+        filtered.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
         break
       case "random":
         for (let i = filtered.length - 1; i > 0; i--) {

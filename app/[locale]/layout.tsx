@@ -4,7 +4,7 @@ import { IM_Fell_DW_Pica, Source_Sans_3 } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { locales } from '@/i18n';
+import { locales, type Locale } from '@/i18n';
 
 import '../globals.css'
 
@@ -29,10 +29,17 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+type Messages = {
+  metadata?: {
+    title?: string;
+    description?: string;
+  };
+};
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const messages = await getMessages({ locale }) as any;
-  
+  const messages = await getMessages({ locale }) as Messages;
+
   return {
     title: messages?.metadata?.title || 'Luah Je',
     description: messages?.metadata?.description || 'A digital archive of anonymous messages to the people we loved, lost, or never had the courage to speak to.',
@@ -49,7 +56,7 @@ export default async function LocaleLayout({
   const { locale } = await params;
   
   // Ensure that the incoming `locale` is valid
-  if (!locales.includes(locale as any)) {
+  if (!locales.includes(locale as Locale)) {
     notFound();
   }
 

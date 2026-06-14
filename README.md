@@ -218,6 +218,32 @@ NEXT_PUBLIC_SITE_URL="http://localhost:3000"
 
 ## Deployment
 
+### Self-Hosting with Custom Domain
+
+To deploy with your own domain (e.g., `luahje.muaz.app`):
+
+1. **Update environment variables** in `.env.local`:
+   ```bash
+   # Production domain
+   ALLOWED_ORIGINS="https://luahje.muaz.app,http://localhost:3000"
+   NEXT_PUBLIC_SITE_URL="https://luahje.muaz.app"
+   ```
+
+2. **Set up Cloudflare Tunnel** (or reverse proxy):
+   ```bash
+   # Install cloudflared
+   # Create tunnel pointing to http://localhost:3000
+   cloudflared tunnel create luahje
+   cloudflared tunnel route dns luahje luahje.muaz.app
+   cloudflared tunnel run luahje
+   ```
+
+3. **Ensure systemd service is running**:
+   ```bash
+   sudo systemctl enable luahje
+   sudo systemctl start luahje
+   ```
+
 ### Cloudflare Workers (Production)
 
 This app is configured for Cloudflare Workers deployment using OpenNext:
